@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <!-- import Vue 2.5-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+
+    <!-- import iview 2.14.3-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iview@2.14.3/dist/styles/iview.css">
+    <script src="https://cdn.jsdelivr.net/npm/iview@2.14.3/dist/iview.min.js"></script>
+
+    <!-- import formCreate -->
+    <script src="https://cdn.jsdelivr.net/npm/@form-create/iview/dist/form-create.min.js"></script>
+</head>
+
+<body>
+    <div id="app1">
+        <form-create v-model="fApi" :rule="rule" :option="option"></form-create>
+    </div>
+
+    <script>
+        function getFormJson() {
+            // TODO: 实际是从后台配置库读取, json的生成可以手工, 也可以开发可视化界面
+            // 可以利用jsoneditor(https://github.com/josdejong/jsoneditor)
+            return [
+                {
+                    type: 'input',
+                    field: 'goods_name',
+                    title: '商品名称'
+                },
+                {
+                    type: 'datePicker',
+                    field: 'created_at',
+                    title: '创建时间'
+                }
+            ];
+        }
+
+        new Vue({
+            el: '#app1',
+            data: {
+                fApi: {},
+                rule: getFormJson(),
+                option: {
+                    onSubmit: function (formData) {
+                        // TODO: 实际上应该是维护后台数据库(mongodb或关系型数据库)jsonkey到字段的映射,进行数据存储或解析
+                        alert(JSON.stringify(formData));
+                        for (key in formData) {
+                            console.log(key + ':' + formData[key]);
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
